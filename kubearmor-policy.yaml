@@ -1,0 +1,37 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: wisecow-policy
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: wisecow
+  defaultAction: Allow
+  rules:
+    - name: allow-http
+      from:
+        - namespaceSelector:
+            matchLabels:
+              name: default
+      to:
+        - namespaceSelector:
+            matchLabels:
+              name: default
+      action: Allow
+      protocols:
+        - tcp
+      port: 80
+    - name: allow-https
+      from:
+        - namespaceSelector:
+            matchLabels:
+              name: default
+      to:
+        - namespaceSelector:
+            matchLabels:
+              name: default
+      action: Allow
+      protocols:
+        - tcp
+      port: 443
